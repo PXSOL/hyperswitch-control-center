@@ -2,9 +2,20 @@ const path = require("path");
 const webpack = require("webpack");
 const { execSync } = require("child_process");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-var currentCommitHash = execSync("git rev-parse HEAD", {
-  encoding: "utf-8",
-}).trim();
+const defaultCommitHash = process.env.SOURCE_COMMIT || "nogit";
+let currentCommitHash = defaultCommitHash;
+
+try {
+  const gitCommit = execSync("git rev-parse HEAD", {
+    encoding: "utf-8",
+  }).trim();
+
+  if (gitCommit) {
+    currentCommitHash = gitCommit;
+  }
+} catch (_err) {
+  currentCommitHash = defaultCommitHash;
+}
 
 module.exports = {
   mode: "development",

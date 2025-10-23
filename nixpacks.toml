@@ -4,12 +4,10 @@ providers = ["node"]
 NODE_ENV = "production"
 NODE_OPTIONS = "--max-old-space-size=4096"
 PORT = "9000"
+SOURCE_COMMIT = "nogit"
 
 [phases.setup]
-nixPkgs = ["...", "git"]
-cmds = [
-  "git init"
-]
+cmds = []
 
 [phases.install]
 # Yarn 3 in this repo runs in node_modules mode and no lockfile is checked into git,
